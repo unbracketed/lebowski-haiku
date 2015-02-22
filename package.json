@@ -15,11 +15,17 @@
   },
   "browserify": {
     "transform": [
-      ["reactify", {"es6": true}]
+      [
+        "reactify",
+        {
+          "es6": true
+        }
+      ]
     ]
   },
   "dependencies": {
     "alt": "^0.13.4",
+    "lodash": "^3.3.0",
     "loglevel": "~1.2.0",
     "react": "~0.12.2",
     "react-router": "^0.12.0"

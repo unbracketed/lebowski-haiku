@@ -1,3 +1,4 @@
+var _ = require('lodash')
 var React = require('react')
 var ListenerMixin = require('alt/mixins/ListenerMixin')
 var haikuStore = require('./store')
@@ -25,18 +26,28 @@ var App = React.createClass({
 
   statics: {
     fetchData (params) {
-      console.log('App:fetchData');
-      return getText('/assets/data/fives.txt').then((textList) => textList.split('\n'))
+      console.log('App:fetchData')
+      var data = {}
+      var urls = {
+        fives: '/assets/data/fives.txt',
+        sevens: '/assets/data/sevens.txt'
+      }
+      var promises = []
+      _.forIn(urls, (url, key) => {promises.push(
+          getText(url)
+            .then((textList) => {data[key] = textList.split('\n')})
+      )})
+      return Promise.all(promises).then(() => data)
     }
   },
 
   getInitialState() {
-    console.log('App:getInitialState', haikuStore.getState());
+    console.log('App:getInitialState', haikuStore.getState())
     return haikuStore.getState()
   },
 
   componentWillMount() {
-    console.log('App:componentWillMount');
+    console.log('App:componentWillMount')
     this.listenTo(haikuStore, this.onChange)
   },
 
