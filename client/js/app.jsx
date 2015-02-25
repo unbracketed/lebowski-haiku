@@ -3,6 +3,7 @@ var React = require('react')
 var ListenerMixin = require('alt/mixins/ListenerMixin')
 var haikuStore = require('./store')
 var dataActions = require('./actions/data')
+var haikuActions = require('./actions/haiku')
 
 
 var getText = function(url) {
@@ -56,6 +57,11 @@ var App = React.createClass({
     this.setState(this.getInitialState())
   },
 
+  handleRefreshClick() {
+    console.log('App:handleRefreshClick')
+    haikuActions.randomizeHaiku()
+  },
+
   render: function () {
     console.log('App:render')
     return (
@@ -69,6 +75,7 @@ var App = React.createClass({
         <div>
           {this.state.haiku.line3}
         </div>
+        <button onClick={this.handleRefreshClick}>Roll again</button>
       </div>
     );
   }
