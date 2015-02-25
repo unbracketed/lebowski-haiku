@@ -14,6 +14,7 @@ var haikuActions = require('./actions/haiku')
 // }
 
 function fetchData(routes, params) {
+  console.log('fetchData')
   var data = {};
   return Promise.all(routes
     .filter(route => route.handler.fetchData)
@@ -26,7 +27,7 @@ function fetchData(routes, params) {
 
 Router.run(routes, function (Handler, state) {
   fetchData(state.routes, state.params).then((data) => {
-    console.log('Router.run:fetchData', data);
+    console.log('Router.run:fetchData.then', data);
     dataActions.addPhrases(data.app)
     haikuActions.randomizeHaiku()
     React.render(<Handler/>, document.body)

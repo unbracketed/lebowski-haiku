@@ -57,6 +57,7 @@ var App = React.createClass({
   },
 
   render: function () {
+    console.log('App:render')
     return (
       <div>
         <div>
