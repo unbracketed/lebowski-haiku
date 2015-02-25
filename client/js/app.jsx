@@ -35,7 +35,7 @@ var App = React.createClass({
       var promises = []
       _.forIn(urls, (url, key) => {promises.push(
           getText(url)
-            .then((textList) => {data[key] = textList.split('\n')})
+            .then((textList) => {data[key] = _.filter(textList.split('\n'), (line) => (line.length > 0))})
       )})
       return Promise.all(promises).then(() => data)
     }
