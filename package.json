@@ -2,7 +2,7 @@
   "name": "lebowski-haiku",
   "description": "lebowski-haiku project",
   "version": "0.1.0",
-  "main": "./client/index.js",
+  "main": "./client/index.jsx",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

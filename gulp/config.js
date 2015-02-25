@@ -79,12 +79,12 @@ module.exports = {
   browserify: {
     // Additional file extentions to make optional
     //extensions: ['.coffee', '.hbs'],
-    extensions: [],
+    extensions: ['.jsx'],
 
     // A separate bundle will be generated for each
     // bundle config in the list below
     bundleConfigs: [{
-      entries: './' + src + '/js/index.js',
+      entries: './' + src + '/js/index.jsx',
       dest: dest + '/js',
       outputName: 'app.js'
     }]
@@ -93,7 +93,7 @@ module.exports = {
   jshint: {
     src: [
       'gulpfile.js',
-      './client/js/index.js',
+      // './client/js/index.js',
       './client/js/**/*.js'
     ]
   },
