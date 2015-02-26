@@ -5,3 +5,4 @@ db.sqlite3
 bundle/
 .bundle/
 .DS_Store
+npm-debug.log
