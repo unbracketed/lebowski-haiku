@@ -6,6 +6,8 @@ var path = require('path')
 app.get('/', function(req, res) {
   res.sendFile('index.html', {root: 'templates'})
 })
+console.log('dirname', __dirname)
+console.log(path.join(__dirname, '..', 'build'))
 app.use(express.static(path.join(__dirname, '..', 'build')))
 
 var server = app.listen((process.env.PORT || 10000), function () {
