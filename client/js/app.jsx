@@ -1,5 +1,6 @@
 var _ = require('lodash')
 var React = require('react')
+var Navigation = require('react-router').Navigation;
 var ListenerMixin = require('alt/mixins/ListenerMixin')
 var haikuStore = require('./store')
 var dataActions = require('./actions/data')
@@ -23,7 +24,7 @@ var getText = function(url) {
 
 var App = React.createClass({
 
-  mixins: [ListenerMixin],
+  mixins: [ListenerMixin, Navigation],
 
   statics: {
     fetchData (params) {
@@ -60,6 +61,15 @@ var App = React.createClass({
   handleRefreshClick() {
     console.log('App:handleRefreshClick')
     haikuActions.randomizeHaiku()
+
+    // We're not in render, so don't rely on
+    // component's state at this point. Read from store
+    var currentState = haikuStore.getState()
+    this.transitionTo('haiku', {
+      lineOneSlug: currentState.haiku.line1.slug,
+      lineTwoSlug: currentState.haiku.line2.slug,
+      lineThreeSlug: currentState.haiku.line3.slug
+    })
   },
 
   render: function () {
@@ -67,13 +77,13 @@ var App = React.createClass({
     return (
       <div>
         <div>
-          {this.state.haiku.line1}
+          {this.state.haiku.line1.phrase}
         </div>
         <div>
-          {this.state.haiku.line2}
+          {this.state.haiku.line2.phrase}
         </div>
         <div>
-          {this.state.haiku.line3}
+          {this.state.haiku.line3.phrase}
         </div>
         <button onClick={this.handleRefreshClick}>Roll again</button>
       </div>

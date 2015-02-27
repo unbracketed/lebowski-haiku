@@ -39,19 +39,18 @@ class HaikuStore {
     console.log(r1, r2, r3)
 
     this.haiku = {
-      line1: r1.phrase,
-      line2: r2.phrase,
-      line3: r3.phrase
+      line1: r1,
+      line2: r2,
+      line3: r3
     }
 
-    //TODO transition route, set haiku there
   }
 
   onSelectPhrases(phrases) {
     this.haiku = {
-      line1: this.phrasesFives[phrases.lineOneSlug],
-      line2: this.phrasesSevens[phrases.lineTwoSlug],
-      line3: this.phrasesFives[phrases.lineThreeSlug]
+      line1: {slug: phrases.lineOneSlug, phrase: this.phrasesFives[phrases.lineOneSlug]},
+      line2: {slug: phrases.lineTwoSlug, phrase: this.phrasesSevens[phrases.lineTwoSlug]},
+      line3: {slug: phrases.lineThreeSlug, phrase: this.phrasesFives[phrases.lineThreeSlug]}
     }
   }
 }

@@ -7,6 +7,7 @@ var Router = require('react-router')
 var routes = require('./routes')
 var dataActions = require('./actions/data')
 var haikuActions = require('./actions/haiku')
+var haikuStore = require('./store')
 
 // Log level setup
 // if (config.debug) {
@@ -27,18 +28,24 @@ function fetchData(routes, params) {
 
 Router.run(routes, function (Handler, state) {
   console.log('Router.run', state.routes, state.params)
+  var router = this;
   fetchData(state.routes, state.params).then((data) => {
     console.log('Router.run:fetchData.then', data);
     dataActions.addPhrases(data.app)
 
-    //TODO if there are params, lookup haiku
     if ('lineOneSlug' in state.params &&
         'lineTwoSlug' in state.params &&
-        'lineThreeSlug' in state.params)
+        'lineThreeSlug' in state.params){
       haikuActions.selectPhrases(state.params)
-    else
+    } else {
       haikuActions.randomizeHaiku()
-
+      var haiku = haikuStore.getState().haiku
+      router.transitionTo('haiku', {
+        lineOneSlug: haiku.line1.slug,
+        lineTwoSlug: haiku.line2.slug,
+        lineThreeSlug: haiku.line3.slug,
+      })
+    }
     React.render(<Handler/>, document.body)
   },
   (reason) => {console.log(reason)})
