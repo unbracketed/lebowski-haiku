@@ -6,6 +6,7 @@ var App = require('./app')
 
 var routes = (
   <Route name="app" path="/" handler={App}>
+    <Route name="haiku" path=":lineOneSlug/:lineTwoSlug/:lineThreeSlug" handler={App}/>
   </Route>
 )
 

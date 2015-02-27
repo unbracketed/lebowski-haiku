@@ -46,6 +46,14 @@ class HaikuStore {
 
     //TODO transition route, set haiku there
   }
+
+  onSelectPhrases(phrases) {
+    this.haiku = {
+      line1: this.phrasesFives[phrases.lineOneSlug],
+      line2: this.phrasesSevens[phrases.lineTwoSlug],
+      line3: this.phrasesFives[phrases.lineThreeSlug]
+    }
+  }
 }
 
 var haikuStore = alt.createStore(HaikuStore)

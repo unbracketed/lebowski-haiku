@@ -26,10 +26,19 @@ function fetchData(routes, params) {
 
 
 Router.run(routes, function (Handler, state) {
+  console.log('Router.run', state.routes, state.params)
   fetchData(state.routes, state.params).then((data) => {
     console.log('Router.run:fetchData.then', data);
     dataActions.addPhrases(data.app)
-    haikuActions.randomizeHaiku()
+
+    //TODO if there are params, lookup haiku
+    if ('lineOneSlug' in state.params &&
+        'lineTwoSlug' in state.params &&
+        'lineThreeSlug' in state.params)
+      haikuActions.selectPhrases(state.params)
+    else
+      haikuActions.randomizeHaiku()
+
     React.render(<Handler/>, document.body)
   },
   (reason) => {console.log(reason)})
