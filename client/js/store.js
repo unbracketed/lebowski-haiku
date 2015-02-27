@@ -1,4 +1,6 @@
+var _ = require('lodash')
 var alt = require('./alt')
+var slug = require('slug')
 var DataActions = require('./actions/data')
 var HaikuActions = require('./actions/haiku')
 
@@ -8,33 +10,41 @@ class HaikuStore {
     console.log('HaikuStore:constructor')
     this.bindActions(DataActions)
     this.bindActions(HaikuActions)
-    this.phrasesFive = []
-    this.phrasesSeven = []
+    this.phrasesFives = {}
+    this.phrasesSevens = {}
     this.haiku = null
   }
 
   onAddPhrases(phrases) {
     console.log('HaikuStore:addPhrases', phrases)
-    this.phrasesFive = phrases.fives
-    this.phrasesSeven = phrases.sevens
+    _.forEach(phrases.fives, (fiver) => {this.phrasesFives[slug(fiver)] = fiver})
+    _.forEach(phrases.sevens, (seven) => {this.phrasesSevens[slug(seven)] = seven})
+    console.log(this.phrasesFives, this.phrasesSevens)
   }
 
   onRandomizeHaiku() {
     console.log('HaikuStore:onRandomizeHaiku')
 
-    var _r = (min, max) => (Math.floor(Math.random() * (max - min)) + min)
-    var _5s = this.phrasesFive.length
-    var _7s = this.phrasesSeven.length
-    var r1 = _r(0, _5s)
-    var r2 = _r(0, _7s)
-    var r3 = _r(0, _5s)
+    var randomProp = (obj) => {
+      var result
+      var count = 0
+      for (var prop in obj)
+          if (Math.random() < 1/++count)
+             result = prop
+      return {slug: result, phrase: obj[result]}
+    }
+    var r1 = randomProp(this.phrasesFives)
+    var r2 = randomProp(this.phrasesSevens)
+    var r3 = randomProp(this.phrasesFives)
     console.log(r1, r2, r3)
 
     this.haiku = {
-      line1: this.phrasesFive[r1],
-      line2: this.phrasesSeven[r2],
-      line3: this.phrasesFive[r3]
+      line1: r1.phrase,
+      line2: r2.phrase,
+      line3: r3.phrase
     }
+
+    //TODO transition route, set haiku there
   }
 }
 
