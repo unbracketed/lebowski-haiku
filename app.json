@@ -1,0 +1,7 @@
+{
+  "name": "Lebowkski Haiku Generator",
+  "description": "A React.js demo using react-router",
+  "repository": "https://github.com/unbracketed/lebowski-haiku",
+  "logo": "https://node-js-sample.herokuapp.com/node.svg",
+  "keywords": ["node", "react", "reactjs", "react-router", "frigate"]
+}
