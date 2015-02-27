@@ -1,7 +1,7 @@
 var cached    = require('gulp-cached');
 var gulp       = require('gulp');
 var gulpIf     = require('gulp-if');
-var imagemin   = require('gulp-imagemin');
+//var imagemin   = require('gulp-imagemin');
 var config     = require('../config').assets;
 var gutil      = require('gulp-util');
 
