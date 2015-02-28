@@ -2,9 +2,9 @@ var _ = require('lodash')
 var React = require('react')
 var Navigation = require('react-router').Navigation;
 var ListenerMixin = require('alt/mixins/ListenerMixin')
-var haikuStore = require('./store')
-var dataActions = require('./actions/data')
-var haikuActions = require('./actions/haiku')
+var haikuStore = require('../store')
+var dataActions = require('../actions/data')
+var haikuActions = require('../actions/haiku')
 
 
 var getText = function(url) {

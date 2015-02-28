@@ -1,6 +1,6 @@
 "use strict";
 
-var app = require('./app')
+var app = require('./components/app')
 var log = require('loglevel')
 var React = require('react')
 var Router = require('react-router')
