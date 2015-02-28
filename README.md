@@ -6,13 +6,19 @@ http://lebowski-haiku.herokuapp.com/
 
 ## Get Started
 
+Use the handy button to create a site:
+
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+
+or run the code yourself:
 
 ```
   git clone https://github.com/unbracketed/lebowski-haiku.git
   cd lebowski-haiku
   npm install
-  gulp
+  npm start
+
+  # open browser to http://localhost:10000
 ```
 
 ## About
