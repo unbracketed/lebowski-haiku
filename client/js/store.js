@@ -1,29 +1,32 @@
 var _ = require('lodash')
 var alt = require('./alt')
 var slug = require('slug')
+var Router = require('react-router')
 var DataActions = require('./actions/data')
 var HaikuActions = require('./actions/haiku')
 
 
 class HaikuStore {
   constructor() {
-    console.log('HaikuStore:constructor')
+    console.log('%cHaikuStore:constructor', 'background: blue; color: white')
     this.bindActions(DataActions)
     this.bindActions(HaikuActions)
-    this.phrasesFives = {}
-    this.phrasesSevens = {}
+    this.phrasesFives = null
+    this.phrasesSevens = null
     this.haiku = null
+    this.displayHaiku = false
   }
 
   onAddPhrases(phrases) {
-    console.log('HaikuStore:addPhrases', phrases)
+    console.log('%cHaikuStore:addPhrases', 'background: blue; color: white', phrases)
+    if (!this.phrasesFives) this.phrasesFives = {}
+    if (!this.phrasesSevens) this.phrasesSevens = {}
     _.forEach(phrases.fives, (fiver) => {this.phrasesFives[slug(fiver)] = fiver})
     _.forEach(phrases.sevens, (seven) => {this.phrasesSevens[slug(seven)] = seven})
-    console.log(this.phrasesFives, this.phrasesSevens)
   }
 
   onRandomizeHaiku() {
-    console.log('HaikuStore:onRandomizeHaiku')
+    console.log('%cHaikuStore:onRandomizeHaiku', 'background: blue; color: white')
 
     var randomProp = (obj) => {
       var result
@@ -36,7 +39,6 @@ class HaikuStore {
     var r1 = randomProp(this.phrasesFives)
     var r2 = randomProp(this.phrasesSevens)
     var r3 = randomProp(this.phrasesFives)
-    console.log(r1, r2, r3)
 
     this.haiku = {
       line1: r1,
@@ -44,14 +46,28 @@ class HaikuStore {
       line3: r3
     }
 
+    return false
   }
 
   onSelectPhrases(phrases) {
     this.haiku = {
-      line1: {slug: phrases.lineOneSlug, phrase: this.phrasesFives[phrases.lineOneSlug]},
-      line2: {slug: phrases.lineTwoSlug, phrase: this.phrasesSevens[phrases.lineTwoSlug]},
-      line3: {slug: phrases.lineThreeSlug, phrase: this.phrasesFives[phrases.lineThreeSlug]}
+      line1: {
+        slug: phrases.lineOneSlug,
+        phrase: this.phrasesFives[phrases.lineOneSlug]
+      },
+      line2: {
+        slug: phrases.lineTwoSlug,
+        phrase: this.phrasesSevens[phrases.lineTwoSlug]
+      },
+      line3: {
+        slug: phrases.lineThreeSlug,
+        phrase: this.phrasesFives[phrases.lineThreeSlug]
+      }
     }
+  }
+
+  onDisplayHaiku() {
+    this.displayHaiku = true
   }
 }
 

@@ -29,24 +29,21 @@ function fetchData(routes, params) {
 Router.run(routes, function (Handler, state) {
   console.log('Router.run', state.routes, state.params)
   var router = this;
+  console.log('rendering Handler');
+  React.render(<Handler/>, document.body)
   fetchData(state.routes, state.params).then((data) => {
     console.log('Router.run:fetchData.then', data);
-    dataActions.addPhrases(data.app)
-
-    if ('lineOneSlug' in state.params &&
-        'lineTwoSlug' in state.params &&
-        'lineThreeSlug' in state.params){
-      haikuActions.selectPhrases(state.params)
-    } else {
-      haikuActions.randomizeHaiku()
-      var haiku = haikuStore.getState().haiku
-      router.transitionTo('haiku', {
-        lineOneSlug: haiku.line1.slug,
-        lineTwoSlug: haiku.line2.slug,
-        lineThreeSlug: haiku.line3.slug,
-      })
-    }
-    React.render(<Handler/>, document.body)
+    // dataActions.addPhrases(data.app)
+  //
+  //   if ('lineOneSlug' in state.params &&
+  //       'lineTwoSlug' in state.params &&
+  //       'lineThreeSlug' in state.params){
+  //     haikuActions.selectPhrases(state.params)
+  //   } else {
+  //     haikuActions.randomizeHaiku(router.transitionTo)
+  //   }
+  //   console.log('rendering Handler');
+  //   React.render(<Handler/>, document.body)
   },
   (reason) => {console.log(reason)})
 })

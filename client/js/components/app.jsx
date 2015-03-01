@@ -1,6 +1,7 @@
 var _ = require('lodash')
 var React = require('react')
-var Navigation = require('react-router').Navigation;
+var Router = require('react-router')
+var RouteHandler = Router.RouteHandler;
 var ListenerMixin = require('alt/mixins/ListenerMixin')
 var haikuStore = require('../store')
 var dataActions = require('../actions/data')
@@ -24,22 +25,34 @@ var getText = function(url) {
 
 var App = React.createClass({
 
-  mixins: [ListenerMixin, Navigation],
+  mixins: [ListenerMixin],
 
   statics: {
     fetchData (params) {
       console.log('App:fetchData')
-      var data = {}
-      var urls = {
-        fives: '/assets/data/fives.txt',
-        sevens: '/assets/data/sevens.txt'
+
+      //check if data is loaded
+      var currentState = haikuStore.getState()
+      if (currentState.phrasesFives && currentState.phrasesSevens) {
+        console.log('App:fetchData returning data from store');
+        return Promise.resolve({'fives': currentState.phrasesFives, 'sevens': currentState.phrasesSevens})
+      } else {
+        var data = {}
+        var urls = {
+          fives: '/assets/data/fives.txt',
+          sevens: '/assets/data/sevens.txt'
+        }
+        var promises = []
+        _.forIn(urls, (url, key) => {promises.push(
+            getText(url)
+              .then((textList) => {data[key] = _.filter(textList.split('\n'), (line) => (line.length > 0))})
+        )})
+
+        return Promise.all(promises).then(() => {
+          dataActions.addPhrases(data)
+          return true
+        })
       }
-      var promises = []
-      _.forIn(urls, (url, key) => {promises.push(
-          getText(url)
-            .then((textList) => {data[key] = _.filter(textList.split('\n'), (line) => (line.length > 0))})
-      )})
-      return Promise.all(promises).then(() => data)
     }
   },
 
@@ -58,35 +71,25 @@ var App = React.createClass({
     this.setState(this.getInitialState())
   },
 
-  handleRefreshClick() {
-    console.log('App:handleRefreshClick')
-    haikuActions.randomizeHaiku()
-
-    // We're not in render, so don't rely on
-    // component's state at this point. Read from store
-    var currentState = haikuStore.getState()
-    this.transitionTo('haiku', {
-      lineOneSlug: currentState.haiku.line1.slug,
-      lineTwoSlug: currentState.haiku.line2.slug,
-      lineThreeSlug: currentState.haiku.line3.slug
-    })
-  },
-
   render: function () {
-    console.log('App:render')
+    console.log('App:render (p,s)', this.props, this.state)
+    var handlerProps = {
+      dataPresent: false
+    }
+    if (this.state.displayHaiku) {
+      handlerProps = {
+        lineOne: this.state.haiku.line1.phrase,
+        lineTwo: this.state.haiku.line2.phrase,
+        lineThree: this.state.haiku.line3.phrase,
+        dataPresent: true
+      }
+    } else if (_.keys(this.state.phrasesFives).length) {
+      handlerProps = {
+        dataPresent: true
+      }
+    }
     return (
-      <div>
-        <div>
-          {this.state.haiku.line1.phrase}
-        </div>
-        <div>
-          {this.state.haiku.line2.phrase}
-        </div>
-        <div>
-          {this.state.haiku.line3.phrase}
-        </div>
-        <button onClick={this.handleRefreshClick}>Roll again</button>
-      </div>
+      <RouteHandler {...handlerProps}/>
     );
   }
 })
