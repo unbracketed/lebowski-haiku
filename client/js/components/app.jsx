@@ -35,7 +35,6 @@ var App = React.createClass({
       var currentState = haikuStore.getState()
       if (currentState.phrasesFives && currentState.phrasesSevens) {
         console.log('%cApp:fetchData returning data from store', 'background: orange');
-        // return Promise.resolve({'fives': currentState.phrasesFives, 'sevens': currentState.phrasesSevens})
         if('lineOneSlug' in params && 'lineTwoSlug' in params && 'lineThreeSlug' in params) {
           haikuActions.selectPhrases(params)
           haikuActions.displayHaiku()
