@@ -29,13 +29,18 @@ var App = React.createClass({
 
   statics: {
     fetchData (params) {
-      console.log('App:fetchData')
+      console.log('%cApp:fetchData', 'background: orange')
 
       //check if data is loaded
       var currentState = haikuStore.getState()
       if (currentState.phrasesFives && currentState.phrasesSevens) {
-        console.log('App:fetchData returning data from store');
-        return Promise.resolve({'fives': currentState.phrasesFives, 'sevens': currentState.phrasesSevens})
+        console.log('%cApp:fetchData returning data from store', 'background: orange');
+        // return Promise.resolve({'fives': currentState.phrasesFives, 'sevens': currentState.phrasesSevens})
+        if('lineOneSlug' in params && 'lineTwoSlug' in params && 'lineThreeSlug' in params) {
+          haikuActions.selectPhrases(params)
+          haikuActions.displayHaiku()
+        }
+        return Promise.resolve(true)
       } else {
         var data = {}
         var urls = {
@@ -50,6 +55,10 @@ var App = React.createClass({
 
         return Promise.all(promises).then(() => {
           dataActions.addPhrases(data)
+          if('lineOneSlug' in params && 'lineTwoSlug' in params && 'lineThreeSlug' in params) {
+            haikuActions.selectPhrases(params)
+            haikuActions.displayHaiku()
+          }
           return true
         })
       }
