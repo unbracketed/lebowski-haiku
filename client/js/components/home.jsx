@@ -8,9 +8,11 @@ var Home = React.createClass({
   mixins: [Navigation],
 
   handleClick: function() {
+    console.log('%cHome:handleClick', 'background: orange');
     haikuActions.randomizeHaiku()
     haikuActions.displayHaiku()
     var _state = haikuStore.getState()
+    console.log('%ctransition to haiku', 'background:gray', _state)
     this.transitionTo('haiku', {
       lineOneSlug: _state.haiku.line1.slug,
       lineTwoSlug: _state.haiku.line2.slug,
@@ -19,7 +21,7 @@ var Home = React.createClass({
   },
 
   render: function() {
-    console.log('Home:render (p,s)', this.props, this.state)
+    console.log('%cHome:render (p,s)', 'background: orange', this.props, this.state)
     var content = ''
     if (this.props.dataPresent) {
       content = <button onClick={this.handleClick}>White Russian</button>

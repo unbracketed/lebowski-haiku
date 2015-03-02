@@ -11,24 +11,21 @@ var Haiku = React.createClass({
   mixins: [Navigation],
 
   handleRefreshClick() {
-    console.log('Haiku:handleRefreshClick')
+    console.log('%cHaiku:handleRefreshClick', 'background:orange')
     haikuActions.randomizeHaiku()
+    // We're not in render, so don't rely on
+    // component's state at this point. Read from store
     var _state = haikuStore.getState()
+    console.log('%ctransition to haiku', 'background:gray', _state)
     this.transitionTo('haiku', {
       lineOneSlug: _state.haiku.line1.slug,
       lineTwoSlug: _state.haiku.line2.slug,
       lineThreeSlug: _state.haiku.line3.slug,
     })
-    // We're not in render, so don't rely on
-    // component's state at this point. Read from store
-    // var currentState = haikuStore.getState()
-    // this.transitionTo('haiku', {
-    //   lineOneSlug: currentState.haiku.line1.slug,
-    //   lineTwoSlug: currentState.haiku.line2.slug,
-    //   lineThreeSlug: currentState.haiku.line3.slug
-    // })
   },
+
   render: function() {
+    console.log('%cHaiku:render', 'background:orange', this.props, this.state)
     return (
       <div>
         <div>

@@ -57,22 +57,22 @@ var App = React.createClass({
   },
 
   getInitialState() {
-    console.log('App:getInitialState', haikuStore.getState())
+    console.log('%cApp:getInitialState', 'background: orange', haikuStore.getState())
     return haikuStore.getState()
   },
 
   componentWillMount() {
-    console.log('App:componentWillMount')
+    console.log('%cApp:componentWillMount', 'background: orange')
     this.listenTo(haikuStore, this.onChange)
   },
 
   onChange() {
-    console.log('App:onChange');
+    console.log('%cApp:onChange', 'background: orange');
     this.setState(this.getInitialState())
   },
 
   render: function () {
-    console.log('App:render (p,s)', this.props, this.state)
+    console.log('%cApp:render (p,s)', 'background: orange', this.props, this.state)
     var handlerProps = {
       dataPresent: false
     }

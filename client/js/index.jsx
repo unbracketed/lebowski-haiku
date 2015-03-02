@@ -15,7 +15,7 @@ var haikuStore = require('./store')
 // }
 
 function fetchData(routes, params) {
-  console.log('fetchData')
+  console.log('%cfetchData', 'background: gray')
   var data = {};
   return Promise.all(routes
     .filter(route => route.handler.fetchData)
@@ -27,23 +27,11 @@ function fetchData(routes, params) {
 
 
 Router.run(routes, function (Handler, state) {
-  console.log('Router.run', state.routes, state.params)
-  var router = this;
-  console.log('rendering Handler');
+  console.log('%cRouter.run', 'background: gray', state.routes, state.params)
+  console.log('%crendering Handler', 'background: gray');
   React.render(<Handler/>, document.body)
   fetchData(state.routes, state.params).then((data) => {
-    console.log('Router.run:fetchData.then', data);
-    // dataActions.addPhrases(data.app)
-  //
-  //   if ('lineOneSlug' in state.params &&
-  //       'lineTwoSlug' in state.params &&
-  //       'lineThreeSlug' in state.params){
-  //     haikuActions.selectPhrases(state.params)
-  //   } else {
-  //     haikuActions.randomizeHaiku(router.transitionTo)
-  //   }
-  //   console.log('rendering Handler');
-  //   React.render(<Handler/>, document.body)
+    console.log('%cRouter.run:fetchData.then', 'background: gray', data);
   },
   (reason) => {console.log(reason)})
 })

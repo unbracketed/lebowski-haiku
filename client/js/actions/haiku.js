@@ -2,17 +2,18 @@ var alt = require('../alt')
 
 class HaikuActions {
   constructor() {
-    console.log('%cHaikuActions:constructor', 'background: green; color: white');
+    console.log('%cHaikuActions:constructor', 'background: green; color: white')
   }
   displayHaiku() {
+    console.log('%cHaikuActions:displayHaiku', 'background: green; color:white')
     this.dispatch()
   }
   randomizeHaiku() {
-    console.log('HaikuActions:randomizeHaiku')
+    console.log('%cHaikuActions:randomizeHaiku', 'background: green; color: white')
     this.dispatch()
   }
   selectPhrases(phrases) {
-    console.log('HaikuActions:selectPhrases', phrases)
+    console.log('%cHaikuActions:selectPhrases', 'background: green; color: white', phrases)
     this.dispatch(phrases)
   }
 }
