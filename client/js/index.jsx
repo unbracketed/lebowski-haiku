@@ -27,8 +27,9 @@ function fetchData(routes, params) {
 
 
 Router.run(routes, function (Handler, state) {
-  console.log('%cRouter.run', 'background: gray', state.routes, state.params)
-  console.log('%crendering Handler', 'background: gray');
+  console.log('%cRouter.run route=%s', 'background: gray', state.routes[state.routes.length-1].name, state)
+  var activeRoute = state.routes[state.routes.length-1]
+  console.log('%crendering Handler %s', 'background: gray', activeRoute.handler.displayName)
   React.render(<Handler/>, document.body)
   fetchData(state.routes, state.params).then((data) => {
     console.log('%cRouter.run:fetchData.then', 'background: gray', data);
