@@ -5,6 +5,10 @@ var haikuStore = require('../store')
 
 var Home = React.createClass({
 
+  propTypes: {
+    dataPresent: React.PropTypes.bool.isRequired
+  },
+
   mixins: [Navigation],
 
   handleClick: function() {

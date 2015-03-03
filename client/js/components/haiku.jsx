@@ -8,6 +8,12 @@ var haikuStore = require('../store')
 
 var Haiku = React.createClass({
 
+  propTypes: {
+    lineOne: React.PropTypes.string.isRequired,
+    lineTwo: React.PropTypes.string.isRequired,
+    lineTwo: React.PropTypes.string.isRequired
+  },
+
   mixins: [Navigation],
 
   handleRefreshClick() {
