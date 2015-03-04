@@ -5,7 +5,7 @@
   "main": "./client/index.jsx",
   "scripts": {
     "start": "node server/index.js",
-    "postinstall": "gulp build"
+    "postinstall": "gulp build --production"
   },
   "repository": {
     "type": "git",
