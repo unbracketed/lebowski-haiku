@@ -28,17 +28,13 @@ var Haiku = React.createClass({
     console.log('%cHaiku:render', 'background:orange', this.props, state)
     if (state.haiku) {
       return (
-        <div>
-          <div>
-            {state.haiku.line1.phrase}
+        <div className="Aligner">
+          <div className="Aligner-item--fixed">
+            <p>{state.haiku.line1.phrase}</p>
+            <p>{state.haiku.line2.phrase}</p>
+            <p>{state.haiku.line3.phrase}</p>
+            <button onClick={this.handleRefreshClick}>Roll again</button>
           </div>
-          <div>
-            {state.haiku.line2.phrase}
-          </div>
-          <div>
-            {state.haiku.line3.phrase}
-          </div>
-          <button onClick={this.handleRefreshClick}>Roll again</button>
         </div>
       )
     } else {

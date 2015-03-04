@@ -26,9 +26,8 @@ var Home = React.createClass({
       )
     }
     return (
-      <div>
-        <div>Dude Abides</div>
-        {content}
+      <div className="Aligner">
+        <div className="Aligner-item--fixed">Dude Abides {content}</div>
       </div>
     )
   }
