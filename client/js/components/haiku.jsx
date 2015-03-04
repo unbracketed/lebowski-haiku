@@ -1,18 +1,11 @@
 var React = require('react')
 var Router = require('react-router')
-var DefaultRoute = Router.DefaultRoute
 var Navigation = Router.Navigation
 var haikuActions = require('../actions/haiku')
 var haikuStore = require('../store')
 
 
 var Haiku = React.createClass({
-
-  propTypes: {
-    lineOne: React.PropTypes.string.isRequired,
-    lineTwo: React.PropTypes.string.isRequired,
-    lineThree: React.PropTypes.string.isRequired
-  },
 
   mixins: [Navigation],
 
@@ -31,21 +24,26 @@ var Haiku = React.createClass({
   },
 
   render: function() {
-    console.log('%cHaiku:render', 'background:orange', this.props, this.state)
-    return (
-      <div>
+    var state = haikuStore.getState()
+    console.log('%cHaiku:render', 'background:orange', this.props, state)
+    if (state.haiku) {
+      return (
         <div>
-          {this.props.lineOne}
+          <div>
+            {state.haiku.line1.phrase}
+          </div>
+          <div>
+            {state.haiku.line2.phrase}
+          </div>
+          <div>
+            {state.haiku.line3.phrase}
+          </div>
+          <button onClick={this.handleRefreshClick}>Roll again</button>
         </div>
-        <div>
-          {this.props.lineTwo}
-        </div>
-        <div>
-          {this.props.lineThree}
-        </div>
-        <button onClick={this.handleRefreshClick}>Roll again</button>
-      </div>
-    );
+      )
+    } else {
+      return <div>Resetting the pins...</div>
+    }
   }
 
 });

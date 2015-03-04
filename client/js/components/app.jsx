@@ -1,7 +1,7 @@
 var _ = require('lodash')
 var React = require('react')
 var Router = require('react-router')
-var RouteHandler = Router.RouteHandler;
+var RouteHandler = Router.RouteHandler
 var ListenerMixin = require('alt/mixins/ListenerMixin')
 var haikuStore = require('../store')
 var dataActions = require('../actions/data')
@@ -34,11 +34,7 @@ var App = React.createClass({
       //check if data is loaded
       var currentState = haikuStore.getState()
       if (currentState.phrasesFives && currentState.phrasesSevens) {
-        console.log('%cApp:fetchData returning data from store', 'background: orange');
-        if('lineOneSlug' in params && 'lineTwoSlug' in params && 'lineThreeSlug' in params) {
-          haikuActions.selectPhrases(params)
-          haikuActions.displayHaiku()
-        }
+        console.log('%cApp:fetchData data is loaded', 'background: orange');
         return Promise.resolve(true)
       } else {
         var data = {}
@@ -54,10 +50,6 @@ var App = React.createClass({
 
         return Promise.all(promises).then(() => {
           dataActions.addPhrases(data)
-          if('lineOneSlug' in params && 'lineTwoSlug' in params && 'lineThreeSlug' in params) {
-            haikuActions.selectPhrases(params)
-            haikuActions.displayHaiku()
-          }
           return true
         })
       }
@@ -65,8 +57,9 @@ var App = React.createClass({
   },
 
   getInitialState() {
-    console.log('%cApp:getInitialState', 'background: orange', haikuStore.getState())
-    return haikuStore.getState()
+    var state = haikuStore.getState()
+    console.log('%cApp:getInitialState', 'background: orange', state)
+    return state
   },
 
   componentWillMount() {
@@ -81,24 +74,7 @@ var App = React.createClass({
 
   render: function () {
     console.log('%cApp:render (p,s)', 'background: orange', this.props, this.state)
-    var handlerProps = {
-      dataPresent: false
-    }
-    if (this.state.displayHaiku) {
-      handlerProps = {
-        lineOne: this.state.haiku.line1.phrase,
-        lineTwo: this.state.haiku.line2.phrase,
-        lineThree: this.state.haiku.line3.phrase,
-        dataPresent: true
-      }
-    } else if (_.keys(this.state.phrasesFives).length) {
-      handlerProps = {
-        dataPresent: true
-      }
-    }
-    return (
-      <RouteHandler {...handlerProps}/>
-    );
+    return <RouteHandler/>
   }
 })
 
