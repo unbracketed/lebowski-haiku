@@ -6,6 +6,7 @@ var DataActions = require('./actions/data')
 var HaikuActions = require('./actions/haiku')
 
 
+
 class HaikuStore {
   constructor() {
     console.log('%cHaikuStore:constructor', 'background: blue; color: white')
@@ -14,7 +15,6 @@ class HaikuStore {
     this.phrasesFives = null
     this.phrasesSevens = null
     this.haiku = null
-    this.displayHaiku = false
   }
 
   onAddPhrases(phrases) {
@@ -45,8 +45,6 @@ class HaikuStore {
       line2: r2,
       line3: r3
     }
-
-    return false
   }
 
   onSelectPhrases(phrases) {
@@ -66,9 +64,6 @@ class HaikuStore {
     }
   }
 
-  onDisplayHaiku() {
-    this.displayHaiku = true
-  }
 }
 
 var haikuStore = alt.createStore(HaikuStore)

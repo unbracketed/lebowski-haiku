@@ -1,13 +1,10 @@
 "use strict";
 
-var app = require('./components/app')
 var log = require('loglevel')
 var React = require('react')
 var Router = require('react-router')
 var routes = require('./routes')
-var dataActions = require('./actions/data')
-var haikuActions = require('./actions/haiku')
-var haikuStore = require('./store')
+ var haikuActions = require('./actions/haiku')
 
 // Log level setup
 // if (config.debug) {
@@ -32,7 +29,14 @@ Router.run(routes, function (Handler, state) {
   console.log('%crendering Handler %s', 'background: gray', activeRoute.handler.displayName)
   React.render(<Handler/>, document.body)
   fetchData(state.routes, state.params).then((data) => {
-    console.log('%cRouter.run:fetchData.then', 'background: gray', data);
+    console.log('%cRouter.run:fetchData.then', 'background: gray', data)
+
+    //TODO figure out undefined for root route
+    if (activeRoute.name === 'haiku') {
+      haikuActions.selectPhrases(state.params)
+    } else {
+      haikuActions.randomizeHaiku()
+    }
   },
   (reason) => {console.log(reason)})
 })
